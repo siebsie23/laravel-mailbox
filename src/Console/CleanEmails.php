@@ -24,7 +24,7 @@ class CleanEmails extends Command
             return 1;
         }
 
-        $cutOffDate = Carbon::now()->subDay($maxAgeInDays)->format('Y-m-d H:i:s');
+        $cutOffDate = Carbon::now()->subDays($maxAgeInDays)->format('Y-m-d H:i:s');
 
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
