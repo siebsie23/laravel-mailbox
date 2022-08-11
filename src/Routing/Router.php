@@ -85,23 +85,24 @@ class Router
     {
         if ($email->isValid()) {
             $matchedRoutes = $this->routes->match($email);
+            try {
+                $matchedRoutes->map(function (Route $route) use ($email) {
+                    $route->run($email);
+                });
 
-            if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
-                $this->storeEmail($email);
-            }
+                if ($matchedRoutes->isEmpty() && $this->fallbackRoute) {
+                    $matchedRoutes[] = $this->fallbackRoute;
+                    $this->fallbackRoute->run($email);
+                }
 
-            $matchedRoutes->map(function (Route $route) use ($email) {
-                $route->run($email);
-            });
-
-            if ($matchedRoutes->isEmpty() && $this->fallbackRoute) {
-                $matchedRoutes[] = $this->fallbackRoute;
-                $this->fallbackRoute->run($email);
-            }
-
-            if ($this->catchAllRoute) {
-                $matchedRoutes[] = $this->catchAllRoute;
-                $this->catchAllRoute->run($email);
+                if ($this->catchAllRoute) {
+                    $matchedRoutes[] = $this->catchAllRoute;
+                    $this->catchAllRoute->run($email);
+                }
+            } finally {
+                if ($this->shouldStoreInboundEmails() && $this->shouldStoreAllInboundEmails($matchedRoutes)) {
+                    $this->storeEmail($email);
+                }
             }
         }
     }
