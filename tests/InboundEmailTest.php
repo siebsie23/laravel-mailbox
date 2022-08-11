@@ -155,7 +155,26 @@ class InboundEmailTest extends TestCase
 
         Mail::to('someone@beyondco.de')->send(new TestMail);
 
-        Mail::assertSent(ReplyMail::class);
+        Mail::assertSent(ReplyMail::class, function (ReplyMail $mail){
+            return $mail->hasTo('example@beyondco.de');
+        });
+    }
+
+
+    /** @test */
+    public function it_respects_to_reply_to_header()
+    {
+        Mailbox::from('example@beyondco.de', function (InboundEmail $email) {
+            Mail::fake();
+
+            $email->reply(new ReplyMail);
+        });
+
+        Mail::to('someone@beyondco.de')->send((new TestMail)->replyTo('reply@beyondco.de'));
+
+        Mail::assertSent(ReplyMail::class, function (ReplyMail $mail){
+            return $mail->hasTo('reply@beyondco.de') && ! $mail->hasTo('example@beyondco.de');
+        });
     }
 
     /** @test */
