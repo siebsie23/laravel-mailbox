@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use ZBateson\MailMimeParser\Header\AddressHeader;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
 use ZBateson\MailMimeParser\Message as MimeMessage;
-use ZBateson\MailMimeParser\Message\Part\MessagePart;
+use ZBateson\MailMimeParser\Message\IMessagePart;
 
 class InboundEmail extends Model
 {
@@ -132,7 +132,7 @@ class InboundEmail extends Model
     }
 
     /**
-     * @return MessagePart[]
+     * @return IMessagePart[]
      */
     public function attachments()
     {
@@ -141,7 +141,7 @@ class InboundEmail extends Model
 
     public function message(): MimeMessage
     {
-        $this->mimeMessage = $this->mimeMessage ?: MimeMessage::from($this->message);
+        $this->mimeMessage = $this->mimeMessage ?: MimeMessage::from($this->message, false);
 
         return $this->mimeMessage;
     }
@@ -150,7 +150,7 @@ class InboundEmail extends Model
     {
         if ($mailable instanceof \Illuminate\Mail\Mailable) {
             $usesSymfonyMailer = version_compare(app()->version(), '9.0.0', '>');
-            if($usesSymfonyMailer){
+            if ($usesSymfonyMailer) {
                 $mailable->withSymfonyMessage(function (\Symfony\Component\Mime\Email $email) {
                     $email->getHeaders()->addIdHeader('In-Reply-To', $this->id());
                 });
