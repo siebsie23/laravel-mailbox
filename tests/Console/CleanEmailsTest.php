@@ -26,7 +26,7 @@ class CleanEmailsTest extends TestCase
 
         $this->assertCount(60, InboundEmail::all());
 
-        $this->artisan('mailbox:clean')->assertSuccessful();
+        $this->artisan('mailbox:clean');
 
         $this->assertCount(31, InboundEmail::all());
 
@@ -41,7 +41,7 @@ class CleanEmailsTest extends TestCase
         $this->app['config']->set('mailbox.store_incoming_emails_for_days', 1);
         $this->makeMailForDays(3);
 
-        $this->artisan('mailbox:clean')->assertSuccessful();
+        $this->artisan('mailbox:clean');
 
         $this->assertCount(1, InboundEmail::all());
 
