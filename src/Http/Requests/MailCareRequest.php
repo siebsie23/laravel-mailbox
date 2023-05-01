@@ -15,6 +15,9 @@ class MailCareRequest extends FormRequest
 
     public function email()
     {
-        return InboundEmail::fromMessage(file_get_contents('php://input'));
+        /** @var InboundEmail $modelClass */
+        $modelClass = config('mailbox.model');
+
+        return $modelClass::fromMessage($this->getContent());
     }
 }
