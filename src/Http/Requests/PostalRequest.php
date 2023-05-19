@@ -11,7 +11,8 @@ class PostalRequest extends FormRequest
     public function validator()
     {
         return Validator::make($this->all(), [
-            'email' => 'required',
+            'message' => 'required',
+            'base64' => 'required',
         ]);
     }
 
@@ -20,6 +21,13 @@ class PostalRequest extends FormRequest
         /** @var InboundEmail $modelClass */
         $modelClass = config('mailbox.model');
 
-        return $modelClass::fromMessage($this->get('email'));
+        // Decode the base64 encoded message if the base64 parameter is true
+        if ($this->get('base64')) {
+            $message = base64_decode($this->get('message'));
+        } else {
+            $message = $this->get('message');
+        }
+
+        return $modelClass::fromMessage($message);
     }
 }
