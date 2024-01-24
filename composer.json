@@ -2,33 +2,25 @@
     "name": "siebsie23/laravel-mailbox",
     "description": "Handle incoming emails in your Laravel application.",
     "keywords": [
-        "beyondcode",
+        "siebsie23",
         "laravel-mailbox"
     ],
-    "homepage": "https://github.com/beyondcode/laravel-mailbox",
+    "homepage": "https://github.com/siebsie23/laravel-mailbox",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Marcel Pociot",
-            "email": "marcel@beyondco.de",
-            "homepage": "https://beyondcode.de",
-            "role": "Developer"
-        }
-    ],
     "require": {
-        "php": "^7.3|^8.0",
-        "illuminate/container": "^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/database": "^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/log": "^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/routing": "^6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0",
-        "willdurand/email-reply-parser": "^2.8",
-        "zbateson/mail-mime-parser": "^2.3"
+        "php": "^8.0",
+        "illuminate/container": "^9.0|^10.0",
+        "illuminate/database": "^9.0|^10.0",
+        "illuminate/log": "^9.0|^10.0",
+        "illuminate/routing": "^9.0|^10.0",
+        "illuminate/support": "^9.0|^10.0",
+        "willdurand/email-reply-parser": "^2.10",
+        "zbateson/mail-mime-parser": "^2.4"
     },
     "require-dev": {
-        "laminas/laminas-mail": "^2.13",
-        "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^4.0|^5.0|^7.0|^8.0",
+        "laminas/laminas-mail": "^2.25",
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^7.0|^8.0",
         "phpunit/phpunit": "^7.0|^8.0|^9.3"
     },
     "autoload": {
