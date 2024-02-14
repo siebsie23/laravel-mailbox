@@ -36,8 +36,11 @@ class InboundEmail extends Model
 
     public static function fromMessage($message)
     {
+        $encoding = mb_detect_encoding($message, ['UTF-8', 'ISO-8859-1', 'windows-1252', 'KOI8-R', 'BIG5', 'GB2312', 'Shift_JIS']);
+        $static_message = ($encoding !== 'UTF-8') ? mb_convert_encoding($message, 'UTF-8', $encoding) : $message;
+
         return new static([
-            'message' => $message,
+            'message' => $static_message,
         ]);
     }
 
