@@ -20,8 +20,8 @@
     "require-dev": {
         "laminas/laminas-mail": "^2.25",
         "mockery/mockery": "^1.6",
-        "orchestra/testbench": "^7.0|^8.0",
-        "phpunit/phpunit": "^7.0|^8.0|^9.3"
+        "orchestra/testbench": "^7.0|^8.0|^9.0",
+        "phpunit/phpunit": "^7.0|^8.0|^9.3|^10.5"
     },
     "autoload": {
         "psr-4": {
