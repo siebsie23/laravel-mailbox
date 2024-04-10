@@ -39,6 +39,9 @@ class InboundEmail extends Model
         $encoding = mb_detect_encoding($message, ['UTF-8', 'ISO-8859-1', 'windows-1252', 'KOI8-R', 'BIG5', 'GB2312', 'Shift_JIS']);
         $static_message = ($encoding !== 'UTF-8') ? mb_convert_encoding($message, 'UTF-8', $encoding) : $message;
 
+        // Replace invalid utf-8 characters by visually similar characters
+        $static_message = iconv('UTF-8', 'UTF-8//TRANSLIT', $static_message);
+
         return new static([
             'message' => $static_message,
         ]);
